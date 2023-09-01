@@ -28,7 +28,7 @@ function WeatherDetail() {
     }, [])
 
     const getCordinates = async(location) => {
-        const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=a51aa5437487f505618f9af39bd5dd1f`)
+        const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${process.env.REACT_APP_API_KEY}`)
         const data = await response.json()
         console.log(data)
         if (data.length == 0){
@@ -40,7 +40,7 @@ function WeatherDetail() {
     const getWeatherDetail = async(location) => {
         const data = await getCordinates(location)
         if (data){
-            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${data.lat}&lon=${data.lon}&appid=a51aa5437487f505618f9af39bd5dd1f`)
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${data.lat}&lon=${data.lon}&appid=${process.env.REACT_APP_API_KEY}`)
             if(!response.ok){
                 setError(true)
                 return
@@ -57,7 +57,7 @@ function WeatherDetail() {
     }
 
     const getCityFromLat = async(lat, lon) => {
-        const response = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=a51aa5437487f505618f9af39bd5dd1f`)
+        const response = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${process.env.REACT_APP_API_KEY}`)
         const data = await response.json()
         data.length == 1 && setCity(data[0].name)
     }
